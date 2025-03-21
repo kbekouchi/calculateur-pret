@@ -2,6 +2,8 @@
 
 body {
   font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .App {
@@ -21,21 +23,29 @@ body {
   color: white;
 }
 
-h1 {
+.app-title {
   margin-bottom: 30px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 10px;
   color: #ffffff;
   font-weight: 600;
   font-size: 2.5rem;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  position: relative;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 20px 0;
 }
 
 h1::after {
   content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
+  margin: 15px auto 0;
   width: 120px;
   height: 4px;
   background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
@@ -64,6 +74,46 @@ h1::after {
 .form-group {
   margin-bottom: 20px;
   text-align: left;
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.animate-form .form-group {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 0.5s forwards;
+}
+
+.animate-form .form-group:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.animate-form .form-group:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.animate-form .form-group:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.animate-form .button-group {
+  opacity: 0;
+  animation: fadeIn 0.5s 0.4s forwards;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
 }
 
 label {
@@ -77,6 +127,7 @@ label {
 input {
   width: 100%;
   padding: 12px 15px;
+  padding-right: 40px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   font-size: 16px;
@@ -84,6 +135,7 @@ input {
   background: rgba(255, 255, 255, 0.07);
   color: white;
   transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
 }
 
 input:focus {
@@ -96,23 +148,47 @@ input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
-button {
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.submit-button {
   background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
   color: #1e3c72;
+}
+
+.reset-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: none;
+}
+
+.reset-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+}
+
+button {
   border: none;
   padding: 14px 24px;
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  margin-top: 10px;
   width: 100%;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 201, 255, 0.25);
   letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Poppins', sans-serif;
 }
 
-button:hover {
+.submit-button:hover {
   background: linear-gradient(90deg, #00c9ff 30%, #92fe9d 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 201, 255, 0.35);
@@ -129,7 +205,33 @@ button:disabled {
   box-shadow: none;
 }
 
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #1e3c72;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .error-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: #ff6e6e;
   margin: 20px 0;
   font-weight: 500;
@@ -137,6 +239,8 @@ button:disabled {
   padding: 12px 18px;
   border-radius: 8px;
   border-left: 4px solid #ff6e6e;
+  max-width: 500px;
+  width: 90%;
 }
 
 .result-container {
@@ -151,6 +255,42 @@ button:disabled {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.18);
   animation: fadeIn 0.5s ease;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.result-summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 5px;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.summary-value.primary {
+  color: #00c9ff;
+}
+
+.result-details {
+  margin-bottom: 30px;
 }
 
 @keyframes fadeIn {
@@ -205,6 +345,93 @@ h2::after {
   border-radius: 2px;
 }
 
+.loan-chart {
+  margin-top: 30px;
+}
+
+.chart-label {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.chart-container {
+  height: 40px;
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.chart-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: width 1s ease;
+}
+
+.principal-bar {
+  background: linear-gradient(90deg, #00c9ff 0%, #3fcbff 100%);
+}
+
+.interest-bar {
+  background: linear-gradient(90deg, #ff6e6e 0%, #ff9d9d 100%);
+}
+
+.chart-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 10px;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+}
+
+.principal-color {
+  background: #00c9ff;
+}
+
+.interest-color {
+  background: #ff6e6e;
+}
+
+.app-footer {
+  margin-top: 50px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  padding: 10px;
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Responsive design adjustments */
 @media (max-width: 600px) {
   h1 {
@@ -214,35 +441,26 @@ h2::after {
   .loan-form, .result-container {
     padding: 25px;
   }
-}
-
-/* Animation for form fields */
-.form-group {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: slideUp 0.5s forwards;
-}
-
-.form-group:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.form-group:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.form-group:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-button {
-  opacity: 0;
-  animation: fadeIn 0.5s 0.4s forwards;
-}
-
-@keyframes slideUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .result-summary {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .chart-legend {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .result-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .result-item span:last-child {
+    align-self: flex-end;
+    font-weight: 600;
   }
 }
